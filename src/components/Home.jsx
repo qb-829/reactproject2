@@ -7,13 +7,21 @@ import '../components/assets/styles/bootstrap.css'
 import '../components/assets/styles/responsive.css'
 
 export default function Home({searchResults}) {
+    const [watchList, setWatchList] = useState([]);
+    const [movieTitle, setMovieTitle] = useState('');
+
+    const movieList = useSelector(state => state.movieName);
     const dispatch = useDispatch();
 
-    const makeWatchList = (e, movieTitle) => {
+    const handleSumbit = (e, movieTitle) => {
         e.preventDefault();
-
-            
+        console.log('make watch list');
+        setMovieTitle(movieTitle)
+        setWatchList(watchList + movieTitle)
         dispatch(addMovie(movieTitle))
+        console.log(movieList)
+        console.log(watchList);
+
 
     }
   return <>
@@ -22,7 +30,7 @@ export default function Home({searchResults}) {
         <div class="jumbotron text-center">
             <h1>Home Page for Movie Watchlist App</h1>
             <Link to='/movie' > 
-                <button class="btn btn-primary" href='./components/Movie.jsx'>
+                <button class="btn btn-primary" href='./components/Watchlist.jsx'>
                     Enter Site
                 </button>
             </Link>
@@ -39,9 +47,7 @@ export default function Home({searchResults}) {
                         <div class="jumbotron text-center">
                             <li>{movie.title}</li>
                             <p>{movie.overview}</p>
-                            <button type='submit'  onClick={(e) => makeWatchList(e, movie.title)} className='btn btn-primary' id='btn-submit'>Add Movie to Watchlist</button>
-                            
-
+                            <button type='submit'  onClick={(e) => handleSumbit(e, movie.title)} className='btn btn-primary' id='btn-submit'>Add Movie to Watchlist</button>
 
                         </div>
                         
@@ -50,6 +56,19 @@ export default function Home({searchResults}) {
                 })    
                 }
             </div>
+           <div>
+            <h1>Watchlist</h1>
+            {
+                movieList.map((movie) => {
+                    return <>
+                        <div class="jumbotron text-center">
+                            <h2>{movie.title}</h2>
+                        </div>
+        
+                    </>
+                })    
+                }
+           </div>
         </div>
 
     </body>

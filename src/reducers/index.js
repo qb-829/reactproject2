@@ -1,16 +1,13 @@
-const addMovieReducer = (state = [], action) => {
-    switch(action.type) {
-        case "ADD_MOVIE": {
-            console.log("BAM!")
-            return [...state, 
-                {
-                title: action.payload,
-                }
-            ]
-        }
-        default:
-            return state;    
-    
-    }
-}
-export default addMovieReducer;
+
+
+import { combineReducers } from "redux";
+import setWatchListReducer from "./WatchListReducer";
+import addMovieReducer from "./AddMovieReducer";
+
+
+const allReducers = combineReducers({
+    addedToWatchList: setWatchListReducer,
+    movieName: addMovieReducer
+})
+
+export default allReducers;
